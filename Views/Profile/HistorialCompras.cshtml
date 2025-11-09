@@ -1,36 +1,65 @@
-﻿@* Views/Profile/HistorialCompras.cshtml *@
-@model IEnumerable<Order>
+﻿@model IEnumerable<Order>
 
 @{
     ViewData["Title"] = "Mi Historial de Compras";
 }
 
-<h1>@ViewData["Title"]</h1>
-<hr />
+<div class="container">
+    <h1>@ViewData["Title"]</h1>
+    <hr />
 
-@if (Model.Any())
-{
-    @foreach (var order in Model)
+    @if (Model.Any())
     {
-        <div class="card mb-3">
-            <div class="card-header">
-                <strong>Pedido #@order.Id</strong> - @order.OrderDate.ToShortDateString()
-                <span class="float-end"><strong>Total: @order.Total.ToString("C")</strong></span>
+        @foreach (var order in Model)
+        {
+            <div class="card mb-4 shadow-sm">
+                <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                    <div>
+                        <strong>Pedido #@order.Id</strong>
+                        <span class="text-muted ms-2">Realizado el: @order.OrderDate.ToShortDateString()</span>
+                    </div>
+                    <h4 class="mb-0 text-primary">
+                        Total: @order.Total.ToString("C")
+                    </h4>
+                </div>
+
+                <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="col-md-5 border-end">
+                            <h6 class="text-secondary"><i class="bi bi-truck"></i> Dirección de Envío</h6>
+                            <address class="mb-0 ms-3">
+                                <strong>@order.ShippingName</strong><br>
+                                @order.ShippingAddress<br>
+                                @order.ShippingCity, CP: @order.ShippingPostalCode
+                            </address>
+                        </div>
+
+                        <div class="col-md-7">
+                            <h6 class="text-secondary"><i class="bi bi-box-seam"></i> Productos</h6>
+                            <ul class="list-group list-group-flush">
+                                @foreach (var detail in order.OrderDetails)
+                                {
+                                    <li class="list-group-item d-flex justify-content-between align-items-center px-0 py-2">
+                                        <div>
+                                            <span class="badge bg-secondary me-2">@detail.Quantity x</span>
+                                            @detail.Product.Name
+                                        </div>
+                                        <span>@detail.Price.ToString("C")</span>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="card-body">
-                <ul class="list-group list-group-flush">
-                    @foreach (var detail in order.OrderDetails)
-                    {
-                        <li class="list-group-item">
-                            @detail.Quantity x @detail.Product.Name - (@detail.Price.ToString("C") c/u)
-                        </li>
-                    }
-                </ul>
-            </div>
+        }
+    }
+    else
+    {
+        <div class="alert alert-info text-center">
+            <h4>Aún no has realizado ninguna compra.</h4>
+            <p>¡Echa un vistazo a nuestro catálogo y arma tu PC ideal!</p>
+            <a asp-controller="Home" asp-action="Index" class="btn btn-primary mt-2">Ir a la Tienda</a>
         </div>
     }
-}
-else
-{
-    <p>Aún no has realizado ninguna compra.</p>
-}
+</div>

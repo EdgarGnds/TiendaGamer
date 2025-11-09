@@ -1,0 +1,111 @@
+﻿@model Order
+@{
+    ViewData["Title"] = "Finalizar Compra";
+}
+
+<div class="container">
+    <h1 class="mb-4">Finalizar Compra</h1>
+    <div class="row">
+        <div class="col-md-8">
+            <form asp-action="ProcessCheckout" method="post" id="checkout-form">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h4>1. Dirección de Envío</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label asp-for="ShippingName" class="form-label">Nombre Completo</label>
+                            <input asp-for="ShippingName" class="form-control" required />
+                            <span asp-validation-for="ShippingName" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="ShippingAddress" class="form-label">Dirección</label>
+                            <input asp-for="ShippingAddress" class="form-control" required />
+                            <span asp-validation-for="ShippingAddress" class="text-danger"></span>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="ShippingCity" class="form-label">Ciudad</label>
+                                <input asp-for="ShippingCity" class="form-control" required />
+                                <span asp-validation-for="ShippingCity" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="ShippingPostalCode" class="form-label">Código Postal</label>
+                                <input asp-for="ShippingPostalCode" class="form-control" required />
+                                <span asp-validation-for="ShippingPostalCode" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h4>2. Método de Pago (Simulación)</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label class="form-label">Número de Tarjeta</label>
+                            <input type="text" class="form-control" placeholder="**** **** **** ****" required pattern="\d{16}" title="Ingresa 16 dígitos ficticios" />
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Fecha de Expiración</label>
+                                <input type="text" class="form-control" placeholder="MM/YY" required />
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">CVV</label>
+                                <input type="text" class="form-control" placeholder="***" required pattern="\d{3,4}" />
+                            </div>
+                        </div>
+                        <div class="alert alert-info">
+                            <i class="bi bi-info-circle"></i> Esto es una simulación. Puedes ingresar cualquier dato ficticio que cumpla con el formato.
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-success btn-lg w-100">Pagar y Confirmar Pedido</button>
+            </form>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Resumen del Pedido</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush mb-3">
+                        @* Aquí mostraremos los items del carrito. Lo pasaremos via ViewBag *@
+                        @foreach (var item in ViewBag.CartItems as List<ShoppingCartItem>)
+                        {
+                            <li class="list-group-item d-flex justify-content-between lh-sm">
+                                <div>
+                                    <h6 class="my-0">@item.Product.Name</h6>
+                                    <small class="text-muted">Cantidad: @item.Quantity</small>
+                                </div>
+                                <span class="text-muted">@((item.Product.Price * item.Quantity).ToString("C"))</span>
+                            </li>
+                        }
+                        <li class="list-group-item d-flex justify-content-between bg-light">
+                            <div class="text-success">
+                                <h6 class="my-0">Envío</h6>
+                            </div>
+                            <span class="text-success">GRATIS</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between">
+                            <span>Total (MXN)</span>
+                            <strong>@ViewBag.CartTotal.ToString("C")</strong>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

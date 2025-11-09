@@ -73,9 +73,8 @@ namespace TiendaGamer.Controllers
             return Json(new { success = true, message = "¡Producto agregado al carrito!" });
         }
 
-        // POST: /ShoppingCart/Checkout
-        [HttpPost]
-        [ValidateAntiForgeryToken] // Buena práctica agregar esto al formulario de checkout también
+        // GET: /ShoppingCart/Checkout (Muestra el formulario)
+        [HttpGet]
         public async Task<IActionResult> Checkout()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -89,49 +88,81 @@ namespace TiendaGamer.Controllers
                 return RedirectToAction("Index");
             }
 
-            // --- VALIDACIÓN FINAL DE STOCK ---
-            // Es vital volver a revisar justo antes de cobrar, por si alguien más compró el último artículo
-            // mientras el usuario estaba en la página del carrito.
+            // Validamos stock antes de entrar al checkout
             foreach (var item in cartItems)
             {
                 if (item.Quantity > item.Product.Stock)
                 {
-                    // En un caso real, aquí deberías mostrar un mensaje de error en la página del carrito.
-                    // Por simplicidad, redirigimos al índice del carrito donde el usuario verá que no puede proceder.
-                    TempData["Error"] = $"Lo sentimos, el producto {item.Product.Name} ya no tiene suficiente stock.";
+                    TempData["Error"] = $"El producto {item.Product.Name} ya no tiene suficiente stock.";
                     return RedirectToAction("Index");
                 }
             }
 
-            var order = new Order
-            {
-                UserId = userId,
-                OrderDate = DateTime.Now,
-                OrderDetails = new List<OrderDetail>(),
-                Total = 0
-            };
+            // Pasamos los datos del carrito a la vista para el resumen
+            ViewBag.CartItems = cartItems;
+            ViewBag.CartTotal = cartItems.Sum(i => i.Product.Price * i.Quantity);
 
-            foreach (var item in cartItems)
-            {
-                var orderDetail = new OrderDetail
-                {
-                    ProductId = item.ProductId,
-                    Quantity = item.Quantity,
-                    Price = item.Product.Price
-                };
-                order.OrderDetails.Add(orderDetail);
-                order.Total += (item.Product.Price * item.Quantity);
+            return View(new Order()); // Enviamos un modelo de Order vacío para el formulario
+        }
 
-                // --- RESTA DEL STOCK ---
-                // Aquí es donde finalmente reducimos el inventario
-                item.Product.Stock -= item.Quantity;
+        // POST: /ShoppingCart/ProcessCheckout (Procesa el pago y crea el pedido)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ProcessCheckout(Order order)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var cartItems = await _context.ShoppingCartItems
+                                        .Include(i => i.Product)
+                                        .Where(i => i.UserId == userId)
+                                        .ToListAsync();
+
+            if (!cartItems.Any())
+            {
+                return RedirectToAction("Index");
             }
 
-            _context.Orders.Add(order);
-            _context.ShoppingCartItems.RemoveRange(cartItems);
-            await _context.SaveChangesAsync();
+            // Si el modelo es válido (los campos de envío están llenos)
+            if (ModelState.IsValid)
+            {
+                // Completamos los datos faltantes del pedido
+                order.UserId = userId;
+                order.OrderDate = DateTime.Now;
+                order.OrderDetails = new List<OrderDetail>();
+                order.Total = 0;
 
-            return RedirectToAction("HistorialCompras", "Profile");
+                foreach (var item in cartItems)
+                {
+                    // Validación final de stock
+                    if (item.Quantity > item.Product.Stock)
+                    {
+                        TempData["Error"] = $"Stock insuficiente para {item.Product.Name}.";
+                        return RedirectToAction("Index");
+                    }
+
+                    var orderDetail = new OrderDetail
+                    {
+                        ProductId = item.ProductId,
+                        Quantity = item.Quantity,
+                        Price = item.Product.Price
+                    };
+                    order.OrderDetails.Add(orderDetail);
+                    order.Total += (item.Product.Price * item.Quantity);
+
+                    // Restamos el stock
+                    item.Product.Stock -= item.Quantity;
+                }
+
+                _context.Orders.Add(order);
+                _context.ShoppingCartItems.RemoveRange(cartItems);
+                await _context.SaveChangesAsync();
+
+                return RedirectToAction("HistorialCompras", "Profile");
+            }
+
+            // Si algo falló en la validación, volvemos a mostrar el formulario
+            ViewBag.CartItems = cartItems;
+            ViewBag.CartTotal = cartItems.Sum(i => i.Product.Price * i.Quantity);
+            return View("Checkout", order);
         }
 
         // POST: /ShoppingCart/UpdateCart

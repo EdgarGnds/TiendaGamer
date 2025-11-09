@@ -65,11 +65,9 @@
     </table>
 
     <div class="text-end mt-4">
-        <form asp-controller="ShoppingCart" asp-action="Checkout" method="post">
-            <button type="submit" class="btn btn-success btn-lg">
-                Finalizar Compra
-            </button>
-        </form>
+        <a asp-controller="ShoppingCart" asp-action="Checkout" class="btn btn-success btn-lg">
+            Proceder al Pago
+        </a>
     </div>
 }
 else
