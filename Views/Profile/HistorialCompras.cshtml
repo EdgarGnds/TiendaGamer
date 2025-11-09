@@ -1,0 +1,36 @@
+﻿@* Views/Profile/HistorialCompras.cshtml *@
+@model IEnumerable<Order>
+
+@{
+    ViewData["Title"] = "Mi Historial de Compras";
+}
+
+<h1>@ViewData["Title"]</h1>
+<hr />
+
+@if (Model.Any())
+{
+    @foreach (var order in Model)
+    {
+        <div class="card mb-3">
+            <div class="card-header">
+                <strong>Pedido #@order.Id</strong> - @order.OrderDate.ToShortDateString()
+                <span class="float-end"><strong>Total: @order.Total.ToString("C")</strong></span>
+            </div>
+            <div class="card-body">
+                <ul class="list-group list-group-flush">
+                    @foreach (var detail in order.OrderDetails)
+                    {
+                        <li class="list-group-item">
+                            @detail.Quantity x @detail.Product.Name - (@detail.Price.ToString("C") c/u)
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    }
+}
+else
+{
+    <p>Aún no has realizado ninguna compra.</p>
+}

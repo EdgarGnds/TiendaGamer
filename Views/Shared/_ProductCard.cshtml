@@ -1,0 +1,41 @@
+﻿@* Views/Shared/_ProductCard.cshtml *@
+@model Product
+
+<div class="col-md-3 mb-4">
+    <div class="card h-100 d-flex flex-column"> @* Agregamos d-flex y flex-column aquí *@
+        <a asp-controller="Products" asp-action="Details" asp-route-id="@Model.Id">
+            <img src="@Model.ImageUrl"
+                 class="card-img-top p-3"
+                 alt="@Model.Name"
+                 style="height: 250px; object-fit: contain; width: 100%; background-color: white;">
+        </a>
+        <div class="card-body d-flex flex-column"> @* Mantener d-flex y flex-column aquí *@
+            <h5 class="card-title text-truncate">@Model.Name</h5> @* Añadimos text-truncate *//
+            <p class="card-text text-muted text-truncate">@Model.Category?.Name</p> @* Añadimos text-truncate *//
+
+            @* Hacemos la descripción más corta o controlada para evitar que estire la tarjeta *@
+            <p class="card-text mb-2 text-truncate">
+                @(Model.Description != null && Model.Description.Length > 70 ? Model.Description.Substring(0, 70) + "..." : Model.Description)
+            </p>
+
+            <div class="mt-auto"> @* mt-auto empujará el contenido inferior hacia abajo *@
+                <h4>@Model.Price.ToString("C")</h4>
+
+                @if (Model.Stock > 0)
+                {
+                    <p class="text-success mb-2"><small>En stock: @Model.Stock unidades</small></p>
+
+                    <form asp-controller="ShoppingCart" asp-action="Agregar" method="post" class="js-add-cart-form">
+                        <input type="hidden" name="productId" value="@Model.Id" />
+                        <button type="submit" class="btn btn-primary w-100">Agregar al Carrito</button>
+                    </form>
+                }
+                else
+                {
+                    <p class="text-danger mb-2"><small>Agotado</small></p>
+                    <button class="btn btn-secondary w-100" disabled>Sin Stock</button>
+                }
+            </div>
+        </div>
+    </div>
+</div>

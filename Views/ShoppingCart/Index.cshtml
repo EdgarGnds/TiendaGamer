@@ -1,0 +1,78 @@
+﻿@* Views/ShoppingCart/Index.cshtml *@
+@Html.AntiForgeryToken()
+@model IEnumerable<ShoppingCartItem>
+
+@{
+    ViewData["Title"] = "Mi Carrito de Compras";
+    decimal totalCarrito = 0;
+}
+
+<h1>@ViewData["Title"]</h1>
+<hr />
+
+@if (Model.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>Precio Unitario</th>
+                <th>Subtotal</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                var subtotal = item.Product.Price * item.Quantity;
+                totalCarrito += subtotal;
+
+                <tr data-product-id="@item.ProductId">
+                    <td>@item.Product.Name</td>
+
+                    <td style="width: 150px;">
+                        <div class="input-group">
+                            <button class="btn btn-outline-secondary js-cart-change" data-change="-1">
+                                -
+                            </button>
+                            <input type="text" class="form-control text-center js-cart-quantity" value="@item.Quantity" readonly>
+                            <button class="btn btn-outline-secondary js-cart-change" data-change="1">
+                                +
+                            </button>
+                        </div>
+                    </td>
+
+                    <td>@item.Product.Price.ToString("C")</td>
+
+                    <td class="js-item-subtotal">@subtotal.ToString("C")</td>
+
+                    <td>
+                        <button class="btn btn-danger btn-sm js-cart-change" data-change="0">
+                            Eliminar
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="3" class="text-end"><strong>Total</strong></td>
+                <td colspan="2">
+                    <strong id="js-cart-total">@totalCarrito.ToString("C")</strong> @* <-- ¡ASÍ DEBE QUEDAR! *@
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <div class="text-end mt-4">
+        <form asp-controller="ShoppingCart" asp-action="Checkout" method="post">
+            <button type="submit" class="btn btn-success btn-lg">
+                Finalizar Compra
+            </button>
+        </form>
+    </div>
+}
+else
+{
+    <p>Tu carrito de compras está vacío.</p>
+}

@@ -1,0 +1,118 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+.form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
+  color: var(--bs-secondary-color);
+  text-align: end;
+}
+
+.form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
+  text-align: start;
+}
+
+/* Corrige la altura del carrusel de promociones */
+.carousel-fixed-height {
+    height: 500px; /* <-- Puedes ajustar esta altura (ej: 350px) */
+    overflow: hidden;
+    background-color: #333; /* Color de fondo mientras carga la img */
+}
+
+    .carousel-fixed-height .carousel-item {
+        height: 500px; /* <-- Debe ser igual a la altura de arriba */
+    }
+
+        .carousel-fixed-height .carousel-item img {
+            height: 100%;
+            width: 100%;
+            object-fit: cover; /* <-- Esta es la magia: recorta la imagen, no la deforma */
+            object-position: center;
+        }
+
+/* Colores de marca personalizados para el carrusel */
+
+.text-razer {
+    color: #00FF00 !important; /* Verde neón de Razer */
+    /* Agregamos una sombra para que el texto resalte */
+    text-shadow: 0 0 8px rgba(0, 0, 0, 0.7);
+}
+
+.text-logitech {
+    color: #007ACC !important; /* Azul de Logitech */
+}
+
+.text-hyperx {
+    color: #E03A3E !important; /* Rojo de HyperX */
+}
+
+.sidebar {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0px; /* Ajusta esto a la altura de tu navbar */
+    height: 100vh;
+    overflow-y: auto;
+}
+
+
+/* --- ESTILO 2: MODERNO Y LIMPIO --- */
+.navbar-custom-clean {
+    background-color: #f8f9fa; /* Un gris muy claro */
+    box-shadow: none; /* Quitamos la sombra */
+    border-bottom: 1px solid #e7e7e7; /* Un borde mucho más sutil */
+}
+
+    /* Hacemos los enlaces un poco más "fuertes" */
+    .navbar-custom-clean .nav-link {
+        color: #333;
+        font-weight: 500;
+    }
+
+        .navbar-custom-clean .nav-link:hover,
+        .navbar-custom-clean .navbar-brand:hover {
+            color: #0d6efd; /* Resaltamos en azul al pasar el ratón */
+        }
+
+/* --- ESTILO 3: ACENTO DE COLOR --- */
+.navbar-custom-primary {
+    background-color: #0d6efd; /* Color primario de Bootstrap */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-bottom: none;
+}
+
+    /* Usamos "navbar-dark" en el HTML para que Bootstrap ponga 
+  los textos en color blanco 
+*/
+
+    /* Hacemos que el botón de búsqueda resalte */
+    .navbar-custom-primary .form-control {
+        background-color: rgba(255, 255, 255, 0.9);
+    }
+
+    .navbar-custom-primary .btn-outline-primary {
+        color: #fff;
+        border-color: #fff;
+    }
+
+        .navbar-custom-primary .btn-outline-primary:hover {
+            background-color: #fff;
+            color: #0d6efd; /* Invertimos colores al pasar el ratón */
+        }
