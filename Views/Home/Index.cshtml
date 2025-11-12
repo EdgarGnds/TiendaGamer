@@ -12,14 +12,14 @@
 </div>
 
 <div class="container mb-5">
-    <h2 class="text-center mb-4">Comprar por Categoría</h2>
+    <h2 class="categoria-title-gradient">Comprar por Categoría</h2>
     <div class="row g-4">
 
         <div class="col-md-4">
             <div class="card text-center h-100">
                 <div class="card-body d-flex flex-column justify-content-center p-4">
-                    <i class="bi bi-pc-display h1"></i> <h3 class="card-title">PCs Armadas</h3>
-                    <p class="card-text">Sistemas completos listos para jugar.</p>
+                    <i class="bi bi-pc-display h1"></i> <h3 class="card-title title-gamer-highlight">Pcs Armadas</h3>
+                    <p class="card-text"><strong>Sistemas completos listos para jugar.</strong></p>
                     <a asp-controller="Home" asp-action="PcsArmadas" class="btn btn-outline-primary mt-auto">Ver ahora</a>
                 </div>
             </div>
@@ -29,8 +29,8 @@
             <div class="card text-center h-100">
                 <div class="card-body d-flex flex-column justify-content-center p-4">
                     <i class="bi bi-motherboard h1"></i>
-                    <h3 class="card-title">Componentes</h3>
-                    <p class="card-text">Actualiza tu equipo pieza por pieza.</p>
+                    <h3 class="card-title title-gamer-highlight">Componentes</h3>
+                    <p class="card-text"><strong>Actualiza tu equipo por pieza.</strong></p>
                     <a asp-controller="Home" asp-action="Componentes" class="btn btn-outline-primary mt-auto">Ver ahora</a>
                 </div>
             </div>
@@ -40,8 +40,8 @@
             <div class="card text-center h-100">
                 <div class="card-body d-flex flex-column justify-content-center p-4">
                     <i class="bi bi-keyboard h1"></i>
-                    <h3 class="card-title">Periféricos</h3>
-                    <p class="card-text">Teclados, ratones y monitores.</p>
+                    <h3 class="card-title title-gamer-highlight">Perifericos</h3>
+                    <p class="card-text"><strong>Teclados, Ratones y Monitores.</strong></p>
                     <a asp-controller="Home" asp-action="Perifericos" class="btn btn-outline-primary mt-auto">Ver ahora</a>
                 </div>
             </div>
@@ -93,7 +93,7 @@
 </div>
 
 <div class="container mb-5">
-    <h2 class="text-center mb-4">Productos Destacados</h2>
+    <h2 class="categoria-title-gradient">Productos Destacados</h2>
     <div class="row">
         @if (Model.Any())
         {

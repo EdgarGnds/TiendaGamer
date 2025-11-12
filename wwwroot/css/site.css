@@ -116,3 +116,116 @@ body {
             background-color: #fff;
             color: #0d6efd; /* Invertimos colores al pasar el ratón */
         }
+/*estilo para el texto comprar por categoria*/
+.categoria-title-gradient {
+    font-family: 'Russo One', sans-serif;
+    font-size: 2.5rem;
+    color: black;
+    background: linear-gradient(90deg, #00ffff, #0066ff);
+    padding: 12px 30px;
+    border-radius: 12px;
+    display: inline-block;
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.6);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    transition: transform 0.3s ease;
+}
+
+    .categoria-title-gradient:hover {
+        transform: scale(1.05);
+    }
+
+
+/*    estilo para pcs armadas, componentes y perifericos del home
+*/
+.title-gamer-highlight {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.9rem;
+    text-transform: uppercase;
+    background: linear-gradient(90deg, #ff00ff, #ff6600);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 15px rgba(255, 0, 255, 0.6);
+    letter-spacing: 2px;
+    transition: transform 0.3s ease, text-shadow 0.3s ease;
+}
+
+    .title-gamer-highlight:hover {
+        transform: scale(1.1);
+        text-shadow: 0 0 25px #ff00ff, 0 0 40px #ff6600;
+    }
+
+
+/*TÍTULO PRINCIPAL Para categiria Pcs Armadas, Componentes y Perifericos */
+.title-holo {
+    font-family: 'Russo One', sans-serif;
+    font-size: 3rem;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    background: linear-gradient(90deg, #00ffff, #0066ff, #ff00ff, #ff00ff);
+    background-size: 300%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: holo-move 4s linear infinite;
+    text-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
+}
+
+@keyframes holo-move {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    100% {
+        background-position: 100% 50%;
+    }
+}
+
+/* ====== SUBTÍTULO ====== */
+.subtitle-holo {
+    font-family: 'Poppins', sans-serif;
+    color: rgba(0, 0, 0, 0.7);
+    text-shadow:rgba(0, 0, 0, 0.7);
+    font-size: 1.2rem;
+    margin-top: 10px;
+    letter-spacing: 1px;
+}
+/*Estilo para el texto de subcategorias*/
+.subcat-title {
+    position: relative;
+    display: inline-block;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: #00ffff;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding-left: 15px;
+}
+
+    .subcat-title::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 6px;
+        height: 100%;
+        background: linear-gradient(180deg, #00ffff, #0066ff);
+        border-radius: 3px;
+    }
+
+
+/*estilo para la barra de navegacion*/
+.nav-link {
+    color: rgba(0, 0, 0, 0.7) !important;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+}
+
+    .nav-link:hover {
+        color: rgba(0, 0, 0, 0.7) !important;
+        text-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+        transform: scale(1.05);
+    }
