@@ -9,7 +9,7 @@ html {
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+  box-shadow: 0 0 0 0.1rem , 0 0 0 0.25rem #258cfb;
 }
 
 html {
@@ -18,9 +18,11 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
+    /* Fondo principal: Gris muy oscuro, casi negro */
+    background-color: #1B262C;
+    /* Opcional: Asegúrate de que el color del texto por defecto sea claro, para que se lea bien sobre el nuevo fondo oscuro */
+    color: #E0E0E0;
 }
-
 .form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
   color: var(--bs-secondary-color);
   text-align: end;
@@ -28,6 +30,34 @@ body {
 
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
   text-align: start;
+}
+
+/*Estilo para fondo del mismo color de cada tarjeta del home de pcs armadas, componentes y perifericos */
+.card {
+    /* Fondo: Un gris ligeramente más claro que el body (#1B262C) 
+       para dar un efecto de "capa" y contraste. Usaremos #1E272D. */
+    background-color: #1E272D;
+    /* Color de texto por defecto: Asegura que el texto (como la descripción) sea claro */
+    color: #E0E0E0;
+    /* Opcional: Para que el borde de la tarjeta se vea sutilmente más claro */
+    border: 1px solid #3A444E;
+    /* Si tienes una sombra de caja blanca, reemplázala con una sombra azul/neón */
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.1);
+}
+
+/* Esto apunta a todos los enlaces de navegación dentro de tu barra de navegación */
+.navbar-nav .nav-link {
+    color: #E0E0E0 !important; /* Gris claro, ideal para modo oscuro */
+}
+
+/* Para los enlaces de la derecha (MI HISTORIAL, CARRITO, HOLA, LOGOUT) */
+.navbar-nav a {
+    color: #E0E0E0 !important;
+}
+
+/* Asegura que el logo también sea visible (por si la solución 1 no es suficiente) */
+.navbar-brand {
+    color: #fff !important;
 }
 
 /* Corrige la altura del carrusel de promociones */
@@ -179,15 +209,15 @@ body {
         background-position: 100% 50%;
     }
 }
-
+/*estilo para el fondo del titulo de cada apartado*/
+.titulo-contenedor {
+    background-color: #1B262C;
+    padding: 30px 0;
+}
 /* ====== SUBTÍTULO ====== */
 .subtitle-holo {
-    font-family: 'Poppins', sans-serif;
-    color: rgba(0, 0, 0, 0.7);
-    text-shadow:rgba(0, 0, 0, 0.7);
-    font-size: 1.2rem;
-    margin-top: 10px;
-    letter-spacing: 1px;
+    color: #EAEAEA; /* Gris muy claro */
+    font-size: 1.1rem;
 }
 /*Estilo para el texto de subcategorias*/
 .subcat-title {
@@ -213,6 +243,46 @@ body {
         background: linear-gradient(180deg, #00ffff, #0066ff);
         border-radius: 3px;
     }
+
+/*estilo de fondo para subcategorias*/
+
+.sidebar-dark-custom {
+    /* 1. Fondo oscuro para que se integre */
+    background-color: #1B262C !important;
+    /* 2. Opcional: Borde que imite el color neón */
+    border-right: 2px solid #00FFFF;
+}
+/* Estilo del título 'Subcategorías' */
+.subcat-title {
+    /* Color de texto más brillante o neón */
+    color: #00FFFF;
+    /* Opcional: Sombra de texto para hacerlo parecer neón */
+    text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+    /* Opcional: Espacio inferior */
+    margin-bottom: 10px;
+}
+/*Edtilo de color de los enlaces en las subcategorias*/
+.sidebar-dark-custom .list-group .nav-link {
+    /* Color del texto (Gris claro) */
+    color: #E0E0E0 !important; /* Usamos !important por si acaso, pero intenta sin él primero */
+    text-decoration: none;
+}
+
+/* Para los estados de enlaces visitados (por si acaso) */
+.sidebar-dark-custom .list-group .nav-link:visited {
+    color: #E0E0E0 !important;
+}
+    /* Estilo de los enlaces al pasar el ratón (hover) */
+    .sidebar-dark-custom .nav-link:hover {
+        /* Resaltado con color neón */
+        color: #333;
+        background-color: #252525; /* Un fondo sutil al pasar el ratón */
+        border-radius: 5px;
+    }
+
+
+
+
 
 
 /*estilo para la barra de navegacion*/
